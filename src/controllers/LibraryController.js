@@ -5,11 +5,10 @@ class LibraryController {
 
   async create(req, res) {
     const obra = new this.Library(req.body);
-
     try {
       await obra.save();
-      const { _id, titulo, editora, foto, autores } = obra;
-      return res.status(201).send({ _id, titulo, editora, foto, autores });
+      const { titulo, editora, foto, autores } = obra;
+      return res.status(201).send({ titulo, editora, foto, autores });
     } catch (error) {
       return res.status(422).send(error.message);
     }
