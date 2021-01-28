@@ -12,7 +12,6 @@ class LibraryController {
       });
 
       const getIndexes = await this.Library.find();
-
       if (getIndexes.length <= 0) {
         await obra.save();
       } else {
@@ -20,7 +19,6 @@ class LibraryController {
         obra.id = ultimoId + 1;
         await obra.save();
       }
-
       const { titulo, editora, foto, autores } = obra;
       return res.status(201).send({ titulo, editora, foto, autores });
     } catch (error) {
