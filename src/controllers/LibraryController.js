@@ -4,9 +4,23 @@ class LibraryController {
   }
 
   async create(req, res) {
-    const obra = new this.Library(req.body);
     try {
-      await obra.save();
+      let id = 0;
+      const obra = new this.Library({
+        id,
+        ...req.body,
+      });
+
+      const getIndexes = await this.Library.find();
+
+      if (getIndexes.length <= 0) {
+        await obra.save();
+      } else {
+        let ultimoId = getIndexes.pop().id;
+        obra.id = ultimoId + 1;
+        await obra.save();
+      }
+
       const { titulo, editora, foto, autores } = obra;
       return res.status(201).send({ titulo, editora, foto, autores });
     } catch (error) {

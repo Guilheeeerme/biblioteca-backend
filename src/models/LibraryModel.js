@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
+  id: Number,
   titulo: { type: String, required: true },
   editora: { type: String, required: true },
   foto: { type: String, required: true },
