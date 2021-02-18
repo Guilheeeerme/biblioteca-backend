@@ -4,22 +4,12 @@ class LibraryController {
   }
 
   async create(req, res) {
-    try {
-      let id = 0;
-      const obra = new this.Library({
-        id,
-        ...req.body,
-      });
+    const obra = new this.Library(req.body);
+    const { titulo, editora, foto, autores } = obra;
 
-      const getIndexes = await this.Library.find();
-      if (getIndexes.length <= 0) {
-        await obra.save();
-      } else {
-        let ultimoId = getIndexes.pop().id;
-        obra.id = ultimoId + 1;
-        await obra.save();
-      }
-      const { titulo, editora, foto, autores } = obra;
+    try {
+      await obra.save();
+
       return res.status(201).send({ titulo, editora, foto, autores });
     } catch (error) {
       return res.status(422).send(error.message);
